@@ -3,6 +3,7 @@
 {
   imports = [
     ./applications/bash.nix
+    ./applications/fish.nix
     ./applications/git.nix
     ./applications/gnupg.nix
     ./applications/gnome.nix

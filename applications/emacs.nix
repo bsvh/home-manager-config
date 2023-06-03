@@ -14,9 +14,6 @@ let
   });
 in
 {
-  nixpkgs.overlays = [
-    inputs.emacs.overlay
-  ];
 
   home.packages = with pkgs; [
     mu

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -16,9 +16,14 @@
     ./applications/tmux.nix
   ];
 
+
   home.username = "bsvh";
   home.homeDirectory = "/home/bsvh";
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "22.11";
+
+  nixpkgs.overlays = [
+    inputs.emacs.overlay
+  ];
 
   home.packages = with pkgs; [
     compsize # btrfs-compsize

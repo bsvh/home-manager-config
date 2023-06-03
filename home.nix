@@ -4,6 +4,7 @@
   imports = [
     ./applications/bash.nix
     ./applications/git.nix
+    ./applications/gnupg.nix
     ./applications/gnome.nix
     ./applications/nvim.nix
     ./applications/rust.nix

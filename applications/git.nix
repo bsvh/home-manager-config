@@ -13,6 +13,9 @@
       "*~"
       "*.swp"
     ];
+    signing = {
+      key = "53FFC9ED232C59C99060AC7DA6F2F2656D2D2B70";
+    };
     extraConfig = {
       merge.tool = "meld";
       mergetool.meld = {

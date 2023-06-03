@@ -19,9 +19,10 @@
     emacs = {
       url = "github:nix-community/emacs-overlay";
     };
+    nixgl.url = "github:guibou/nixGL";
   };
 
-  outputs = { self, nixpkgs, home-manager, emacs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, emacs, nixgl, ... }@inputs:
     let
       inherit (self) outputs;
       system = "x86_64-linux";

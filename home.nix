@@ -8,6 +8,7 @@
     ./applications/gnome.nix
     ./applications/nvim.nix
     ./applications/rust.nix
+    ./applications/starship.nix
   ];
 
   home.username = "bsvh";

@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./applications/gnome.nix
+  ];
 
   home.username = "bsvh";
   home.homeDirectory = "/home/bsvh";

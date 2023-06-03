@@ -9,6 +9,7 @@
     ./applications/nvim.nix
     ./applications/rust.nix
     ./applications/starship.nix
+    ./applications/tmux.nix
   ];
 
   home.username = "bsvh";

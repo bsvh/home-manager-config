@@ -3,6 +3,7 @@
 {
   imports = [
     ./applications/gnome.nix
+    ./applications/nvim.nix
   ];
 
   home.username = "bsvh";

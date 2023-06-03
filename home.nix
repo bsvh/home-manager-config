@@ -6,6 +6,7 @@
     ./applications/git.nix
     ./applications/gnome.nix
     ./applications/nvim.nix
+    ./applications/rust.nix
   ];
 
   home.username = "bsvh";

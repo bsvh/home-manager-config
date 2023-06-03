@@ -6,6 +6,7 @@
     ./applications/git.nix
     ./applications/gnupg.nix
     ./applications/gnome.nix
+    ./applications/julia.nix
     ./applications/nvim.nix
     ./applications/rust.nix
     ./applications/starship.nix

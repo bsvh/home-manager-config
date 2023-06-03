@@ -8,6 +8,7 @@
     ./applications/gnupg.nix
     ./applications/gnome.nix
     ./applications/julia.nix
+    ./applications/latex.nix
     ./applications/nvim.nix
     ./applications/rust.nix
     ./applications/starship.nix

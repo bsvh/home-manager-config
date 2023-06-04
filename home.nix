@@ -14,16 +14,12 @@
     ./applications/rust.nix
     ./applications/starship.nix
     ./applications/tmux.nix
+    ./applications/wezterm.nix
   ];
-
 
   home.username = "bsvh";
   home.homeDirectory = "/home/bsvh";
   home.stateVersion = "22.11";
-
-  nixpkgs.overlays = [
-    inputs.emacs.overlay
-  ];
 
   home.packages = with pkgs; [
     compsize # btrfs-compsize

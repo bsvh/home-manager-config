@@ -13,6 +13,7 @@ let
   '';
 in
 {
+  nixpkgs.overlays = [ inputs.nixgl.overlay ];
   programs.wezterm = {
     enable = true;
     package = nixGLWrap pkgs.wezterm;

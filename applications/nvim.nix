@@ -67,17 +67,7 @@
       tnoremap <silent><c-k> <cmd>NavigatorUp<cr>
       tnoremap <silent><c-l> <cmd>NavigatorRight<cr>
 
-      " FZF
-      " nmap <leader><tab> <plug>(fzf-maps-n)
-      " noremap <silent> <leader>ff :Files<CR>
-      " noremap <silent> <leader>fb :Buffers<CR>
-      " noremap <silent> <leader>fp :Files ~/projects<CR>
-      " noremap <silent> <leader>gf :GFiles<CR>
-      " noremap <silent> <leader>gs :GFiles?<CR>
-      " noremap <silent> <leader>gc :Commits<CR>
-      " noremap <silent> <leader>gb :BCommits<CR>
-      " noremap <leader>sr :Rg      
-
+      " Telescope
       nnoremap <leader>ff <cmd>Telescope find_files<cr>
       nnoremap <leader>fg <cmd>Telescope live_grep<cr>
       nnoremap <leader>fb <cmd>Telescope buffers<cr>

@@ -33,6 +33,7 @@
 
       # GUI
       tokyonight-nvim
+      vim-floaterm
       
       
     ];
@@ -66,6 +67,10 @@
       tnoremap <silent><c-j> <cmd>NavigatorDown<cr>
       tnoremap <silent><c-k> <cmd>NavigatorUp<cr>
       tnoremap <silent><c-l> <cmd>NavigatorRight<cr>
+
+      " Floaterm
+      nnoremap <silent> <C-Space> :FloatermToggle<CR>
+      tnoremap <silent> <C-Space> <C-\><C-n>:FloatermToggle<CR>
 
       " Telescope
       nnoremap <leader>ff <cmd>Telescope find_files<cr>

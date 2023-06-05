@@ -48,6 +48,7 @@ in
       epkgs.python-black
       epkgs.pyvenv
       epkgs.rustic
+      epkgs.smtpmail-multi
       #epkgs.toolbox-tramp
       epkgs.use-package
       epkgs.vertico
@@ -83,6 +84,10 @@ in
     "init.el" = {
       source = ../dotfiles/emacs/init.el;
       target = "emacs/init.el";
+    };
+    "accounts.el" = {
+      source = ../dotfiles/emacs/accounts.el;
+      target = "emacs/accounts.el";
     };
   };
 

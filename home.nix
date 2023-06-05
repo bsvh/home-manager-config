@@ -11,6 +11,7 @@
     ./applications/julia.nix
     ./applications/latex.nix
     ./applications/nvim.nix
+    ./applications/offlineimap.nix
     ./applications/rust.nix
     ./applications/starship.nix
     ./applications/tmux.nix

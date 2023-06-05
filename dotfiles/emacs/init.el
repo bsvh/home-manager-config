@@ -68,20 +68,6 @@
     (setq use-package-always-ensure t)))
 (package-initialize)
 
-(use-package mu4e
-  :ensure nil
-  :defer 5 ;; Defer 5 seconds (avoid slowdown for syncing at startup)
-  :config
-  (require 'mu4e-org)
-
-  (setq mu4e-change-filenames-when-moving t
-	mu4e-update-interval (* 10 60)
-	mu4e-get-mail-command "mbsync -a"
-	mu4e-maildir "~/mail")
-  (mu4e t)) ;; Run in background for syncing
-
-
-
 (setq debug-on-error t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -430,6 +416,59 @@
 ;; Rust                                                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rustic)
+
+(use-package mu4e
+  :ensure nil
+  :defer 5 ;; Defer 5 seconds (avoid slowdown for syncing at startup)
+  :config
+  (require 'mu4e-org)
+  (require 'smtpmail-multi)
+  (require 'smtpmail)
+  (require 'shr)
+  (load (concat (xdg-config-home) "/emacs/accounts"))
+
+  (setq	mu4e-get-mail-command "offlineimap"
+	mu4e-update-interval (* 10 60)
+	mu4e-hide-index-messages 2
+
+	mu4e-maildir "~/mail"
+	mu4e-sent-folder "/sent"
+	mu4e-drafts-folder "/drafts"
+	mu4e-trash-folder "/trash"
+	mu4e-archive-folder "/archive"
+
+	mu4e-compose-dont-reply-to-self t
+	mu4e-compose-signature-auto-include nil
+
+	mu4e-html2text-command 'shr-render-current-buffer
+	mu4e-view-show-images t
+	mu4e-view-image-max-width 800)
+
+  (setq smtpmail-debug-info t
+	smtpmail-debug-verbose t
+	smtpmail-multi-default-account (quote personal)
+	message-send-mail-function 'smtpmail-multi-send-it
+	message-kill-buffer-on-exit t)
+
+  (setq mu4e-bookmarks
+	'( ("flag:unread AND NOT flag:trashed"                "Unread messages"        ?u)
+	   ("date:today..now"                                 "Today's messages"       ?t)
+	   ("date:7d..now"                                    "Last 7 days"            ?w)
+	   ("maildir:/sent"                                   "sent"                   ?s)))
+
+  (setq mu4e-maildir-shortcuts
+	'( ("/archive" . ?a)
+	   ("/personal" . ?p)
+	   ("/receipts" . ?r)
+           ("/school"   . ?g)
+           ("/sent"     . ?s)))
+
+  (defun shr-render-current-buffer ()
+    (shr-render-region (point-min) (point-max)))
+
+  (mu4e t)) ;; Run in background for syncing
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom Variables                                                          ;;

@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Startup speedups                                                          ;; 
+;; Startup speedups                                                          ;;
 ;; Stolen from: https://github.com/Bassmann/emacs-config/blob/master/init.el ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Speedup startup by reducing Garbage Collector
@@ -27,7 +27,7 @@
 ;; For startup profiling
 (setq esup-depth 0)
 (setq create-lockfiles nil)
-;; Put backup files neatly away                                                 
+;; Put backup files neatly away
 (let ((backup-dir "~/.local/share/emacs/backups")
       (auto-saves-dir "~/.cache/emacs/auto-saves/"))
   (dolist (dir (list backup-dir auto-saves-dir))
@@ -39,11 +39,14 @@
         tramp-backup-directory-alist `((".*" . ,backup-dir))
         tramp-auto-save-directory auto-saves-dir))
 
-(setq backup-by-copying t    ; Don't delink hardlinks                           
-      delete-old-versions t  ; Clean up the backups                             
-      version-control t      ; Use version numbers on backups,                  
-      kept-new-versions 5    ; keep some new versions                           
-      kept-old-versions 2)   ; and some old ones, too      
+(setq backup-by-copying t    ; Don't delink hardlinks
+      delete-old-versions t  ; Clean up the backups
+      version-control t      ; Use version numbers on backups,
+      kept-new-versions 5    ; keep some new versions
+      kept-old-versions 2)   ; and some old ones, too
+
+(add-hook 'before-save-hook
+	  'delete-trailing-whitespace)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup packages                                                            ;;
@@ -140,7 +143,7 @@
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
-;; Prevent GUI from zombieing out 
+;; Prevent GUI from zombieing out
 (global-unset-key (kbd "C-z"))
 
 ;; Overwrite selection when typing
@@ -168,7 +171,7 @@
   (window-divider-mode)
   (load-theme 'modus-operandi :no-confirm)
   :bind ("<f5>" . modus-themes-toggle)
-  :init 
+  :init
 )
 
 (defun modus-themes-reload ()
@@ -220,21 +223,21 @@
 			  (2 . (variable-pitch 1.3))
 			  (3 . (variable-pitch regular 1.0))
 			  (t . (variable-pitch 1))))
-	    
+
 	    (face-remap-add-relative 'default '(:family "Spectral"))
 	    (face-remap-add-relative 'markdown-header-face-1 '(:family "Spectral"))
 	    (face-remap-add-relative 'markdown-header-face-2 '(:family "Spectral"))
 	    (face-remap-add-relative 'markdown-header-face-3 '(:family "Spectral SC"))
-	    
+
 	    (local-set-key [return] (lambda ()
 				      (interactive)
 				      (insert "\n\n")))
 	    (auto-fill-mode)
-	     
+
 	    (modus-themes-reload)))
-	    
-	    
-		    
+
+
+
   (add-hook 'markdown-mode-hook #'electric-quote-local-mode)
   (add-hook 'markdown-mode-hook 'visual-line-mode))
 
@@ -265,18 +268,18 @@
 	org-special-ctrl-a/e t
 	org-preview-latex-default-process 'dvisvgm
 	org-preview-latex-image-directory "~/.cache/org-latex-images/")
-  ;; (customize-set-variable 'org-blank-before-new-entry 
+  ;; (customize-set-variable 'org-blank-before-new-entry
   ;;                         '((heading . nil)
   ;;                           (plain-list-item . nil)))
   (setq org-cycle-separator-lines 1)
   (setq org-log-done 'time)
-  
+
   (setq org-agenda-files '("~/Documents/Org/inbox.org"
                          "~/documents/org/projects.org"
                          "~/documents/org/tickler.org"))
   (defun transform-square-brackets-to-round-ones(string-to-transform)
     "Transforms [ into ( and ] into ), other chars left unchanged."
-    (concat 
+    (concat
      (mapcar #'(lambda (c) (if (equal c ?\[) ?\( (if (equal c ?\]) ?\) c))) string-to-transform))
   )
   (setq org-capture-templates '(
@@ -304,16 +307,16 @@
                              ("~/documents/org/someday.org" :level . 1)
 			     ("~/documents/org/readinglist.org" :maxlevel . 2)
                            ("~/documents/org/tickler.org" :maxlevel . 2)))
-  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))  
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (global-set-key (kbd "C-c l") #'org-store-link)
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c c") #'org-capture)
-  
+
   (org-defkey org-mode-map (kbd "C-M-<return>") (lambda ()
 						(interactive)
 						(org-insert-heading-respect-content)
 						(org-demote-subtree)))
-  
+
   (org-defkey org-mode-map (kbd "M-i") (lambda ()
 				        (interactive)
 				        (tab-to-tab-stop)))
@@ -343,7 +346,7 @@
 				  (insert "\t")))))
       (setq-local org-modern-hide-stars t
 		  org-modern-tag t
-		  org-tags-column -100	  
+		  org-tags-column -100
 		  modus-themes-common-palette-overrides
 		  '((fg-heading-0 fg-dim)
 		    (fg-heading-1 fg-main)
@@ -376,10 +379,10 @@
 				     :foreground "gray"))
       (electric-quote-local-mode)
       (modus-themes-reload))
-    
+
     (defun my-org-default-setup ()
       (modus-themes-reload))
-    
+
     (if (string-suffix-p ".draft.org" buffer-file-name)
 	(my-org-writing-setup)
       (my-org-default-setup)))
@@ -395,9 +398,9 @@
      (shell . t)
      (python . t)))
 
-  (setq my-org-skipblocks '(			   
+  (setq my-org-skipblocks '(
 			    "center"
-			    "comment"    
+			    "comment"
 			    "example"
 			    "export"
 			    "quote"

@@ -90,6 +90,12 @@ in
       target = "emacs/accounts.el";
     };
   };
+  home.file = {
+    ".authinfo.gpg" = {
+      source = ../dotfiles/emacs/authinfo.gpg;
+      target = ".authinfo.gpg";
+    };
+  };
 
   xdg.desktopEntries.org-protocol = {
     name = "Org Protocol";

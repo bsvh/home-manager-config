@@ -1,5 +1,17 @@
-{ config, pkgs, inputs, ... }:
-
+{ config, lib, pkgs, inputs, ... }:
+let 
+  nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" {} ''
+    mkdir $out
+    ln -s ${pkg}/* $out
+    rm $out/bin
+    mkdir $out/bin
+    for bin in ${pkg}/bin/*; do
+     wrapped_bin=$out/bin/$(basename $bin)
+     echo "exec ${lib.getExe pkgs.nixgl.nixGLIntel} $bin \"\$@\"" > $wrapped_bin
+     chmod +x $wrapped_bin
+    done
+  '';
+in
 {
   imports = [
     ./applications/bash.nix
@@ -18,6 +30,8 @@
     ./applications/wezterm.nix
   ];
 
+  nixpkgs.overlays = [ inputs.nixgl.overlay ];
+
   home.username = "bsvh";
   home.homeDirectory = "/home/bsvh";
   home.stateVersion = "22.11";
@@ -26,6 +40,7 @@
     compsize # btrfs-compsize
     fd
     fff # File manager
+    (nixGLWrap ffmpeg)
     fzf
     htop
     httm # Show versions of files w/ btrfs snapshots
@@ -34,11 +49,15 @@
     libsecret
     lshw
     mediainfo
+    (nixGLWrap mpv)
+    nixgl.nixGLIntel
     p7zip
     pandoc
     ripgrep
     unzip
     wget
+    wl-clipboard
+    yt-dlp
   ];
 
   home.sessionVariables = {
@@ -62,5 +81,6 @@
 
 
   programs.home-manager.enable = true;
+  programs.wezterm.package = nixGLWrap pkgs.wezterm;
   systemd.user.startServices = "sd-switch";
 }

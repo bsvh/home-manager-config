@@ -419,7 +419,6 @@
 
 (use-package mu4e
   :ensure nil
-  :defer 5 ;; Defer 5 seconds (avoid slowdown for syncing at startup)
   :config
   (require 'mu4e-org)
   (require 'smtpmail-multi)

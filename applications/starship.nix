@@ -23,6 +23,8 @@
     format = lib.concatStrings [
       "[┌───────────────────> ](bold green)"
       "$all"
+      "$fill"
+      "$cmd_duration"
       "$line_break"
       "[│](bold green) " 
       "$directory"
@@ -30,18 +32,31 @@
       "[└─$character](bold green) "
     ];
 
+    cmd_duration = {
+      format = "[$duration]($style) ";
+    };
+
+    fill = {
+      symbol = " ";
+    };
+
+    git_branch = {
+      format = "[$symbol$branch(:$remote_branch)]($style) ";
+    };
+
     git_status = {
-      modified = "󱡓  ";
-      staged = " \\($count\\) ";
-      untracked = " \\($count\\) ";
-      up_to_date = "  ";
-      conflicted = " ";
-      diverged = "󱡝 ";
-      ahead = " \\(\${count}\\) ";
-      behind = " \\(\${count}\\) ";
-      deleted = "󰚃  ";
-      renamed = "  ";
-      format = "([$all_status$ahead_behind]($style) )";
+      modified = "[󱡓  ](bold yellow)";
+      staged = "[  $count ](bold green)";
+      untracked = "[  $count ](bold yellow)";
+      up_to_date = "";
+      conflicted = "[ ](bold red)";
+      diverged = "[󱡝 ](bold red)";
+      ahead = "[  $count ](bold green)";
+      behind = "[  $count ](bold yellow)";
+      deleted = "";
+      renamed = "";
+      format = "[$all_status$ahead_behind]($style)";
+      style = "bold blue";
     };
 
     shell = {

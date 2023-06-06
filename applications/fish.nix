@@ -11,8 +11,8 @@
 
       if test "$TERM" != dumb -a \( -z "$INSIDE_EMACS" -o "$INSIDE_EMACS" = vterm \)
           eval (${pkgs.starship}/bin/starship init fish)
+          enable_transience
       end
-      enable_transience
 
       # Wezterm Integration
       function __wezterm_mark_prompt_start --on-event fish_prompt --on-event fish_cancel --on-event fish_posterror

@@ -8,6 +8,7 @@
     diff-so-fancy.enable = true;
     aliases = {
       co = "checkout";
+      stauts = "status";
     };
     ignores = [
       "*~"

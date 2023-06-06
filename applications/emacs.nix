@@ -12,6 +12,8 @@ let
     ulem
     wrapfig;
   });
+  emacsBin = "${config.programs.emacs.package}/bin";
+  emacsFlags = "--no-wait --alternate-editor= ";
 in
 {
   nixpkgs.overlays = [
@@ -24,7 +26,7 @@ in
   ];
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsPgtk;
+    package = pkgs.emacs-pgtk;
     extraPackages = epkgs: [
       epkgs.corfu
       epkgs.consult
@@ -66,9 +68,8 @@ in
 
   services.emacs = {
     enable = true;
-    socketActivation.enable = true;
     client = {
-      enable = true;
+      enable = false;
       arguments = [
         "--no-wait"
         "--create-frame"
@@ -97,12 +98,69 @@ in
     };
   };
 
+  xdg.desktopEntries.emacs = {
+    name = "Emacs";
+    genericName = "Text Editor";
+    comment = "Edit text";
+    exec = "${emacsBin}/emacsclient ${emacsFlags} --reuse-frame %F";
+    type = "Application";
+    icon = "emacs";
+    terminal = false;
+    categories = [ "Development" "TextEditor" ];
+    mimeType = [
+      "text/english"
+      "text/plain"
+      "text/x-makefile"
+      "text/x-c++hdr"
+      "text/x-c++src"
+      "text/x-chdr"
+      "text/x-csrc"
+      "text/x-java"
+      "text/x-moc"
+      "text/x-pascal"
+      "text/x-tcl"
+      "text/x-tex"
+      "application/x-shellscript"
+      "text/x-c"
+      "text/x-c++"
+    ];
+    settings = {
+      "StartupWMClass" = "emacs";
+    };
+    actions = {
+      "new-window" = {
+        name = "New Window";
+        exec = "${emacsBin}/emacsclient --no-wait --create-frame %F";
+      };
+      "new-instance" = {
+        name = "New Instance";
+        exec = "${emacsBin}/emacs %F";
+      };
+    };
+  };
+
+  xdg.desktopEntries.emacsclient-mail = {
+    name = "Emacs (Mail, Client)";
+    genericName = "Text Editor";
+    comment = "Edit text";
+    exec = "${emacsBin}/emacsclient --alternate-editor= --reuse-frame --eval \"(browse-url-mail \\\"%F\\\")\"";
+    type = "Application";
+    icon = "emacs";
+    noDisplay = true;
+    terminal = false;
+    mimeType = [ "x-scheme-handler/mailto" ];
+    settings = {
+      "StartupWMClass" = "emacs";
+    };
+  };
+
   xdg.desktopEntries.org-protocol = {
     name = "Org Protocol";
-    exec = "${config.programs.emacs.package}/bin/emacsclient -- %u";
+    exec = "${emacsBin}/emacsclient -- %u";
     terminal = false;
     type = "Application";
     categories = [ "System" ];
+    noDisplay = true;
     mimeType = [ "x-scheme-handler/org-protocol" ];
   };
 }

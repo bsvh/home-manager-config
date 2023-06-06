@@ -101,7 +101,7 @@ in
         },
         mouse_bindings = {
           {
-            event = { Down = { streak = 3, button = 'Left' } },
+            event = { Down = { streak = 4, button = 'Left' } },
             action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
             mods = 'NONE',
           },
